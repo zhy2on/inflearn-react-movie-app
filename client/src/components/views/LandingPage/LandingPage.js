@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaCode } from "react-icons/fa";
-import { API_KEY, API_URL, IMAGE_BASE_URL } from '../../Config';
-import MainImage from './Sections/MainImage';
+import { API_URL, API_AUTHOR, IMAGE_BASE_URL } from '../../Config';
+import MainImage from '../commons/MainImage';
 import GridCards from '../commons/GridCards';
 import { Row } from 'antd';
 
@@ -9,7 +9,6 @@ function LandingPage() {
     const [Movies, setMoives] = useState([]);
     const [MainMovieImage, setMainMovieImage] = useState(null);
     const [CurrentPage, setCurrentPage] = useState(0);
-
 
     useEffect(() => {
         const url = `${API_URL}movie/popular?language=en-US&page=1`;
@@ -23,7 +22,7 @@ function LandingPage() {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNDRlNjBjYjVhNWNkYjMzMGYzYjRlOGY0MWZhM2FhOSIsInN1YiI6IjY0Nzg2ZjVjZTMyM2YzMDBhN2Q0NTA4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nMyprC-XJeA4cDI8z9VyPup2Wv8QlsFdXaR1a2fHTdU'
+                Authorization: `${API_AUTHOR}`
             }
         };
         fetch(url, options)
