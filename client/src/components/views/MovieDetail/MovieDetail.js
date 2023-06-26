@@ -5,6 +5,7 @@ import MainImage from '../commons/MainImage';
 import MovieInfo from './Sections/MovieInfo';
 import GridCards from '../commons/GridCards';
 import { Row } from 'antd';
+import Favorite from './Sections/Favorite';
 
 function MovieDetail(props) {
 
@@ -60,13 +61,18 @@ function MovieDetail(props) {
 
 			{/*Header*/}
 
-			<MainImage image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
+			{Movie.length !== 0 && <MainImage
+				image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
 				title={Movie.original_title}
 				overview={Movie.overview}
-			/>
+			/>}
 
 			{/*Body*/}
 			<div style={{ width: '85%', margin: '1rem auto' }}>
+
+				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+					<Favorite movie={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>
+				</div>
 
 				{/* Movie Info */}
 
