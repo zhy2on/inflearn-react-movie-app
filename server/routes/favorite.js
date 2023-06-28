@@ -32,4 +32,23 @@ router.post('/favorited', (req, res) => {
 	// 프론트에 다시 숫자 정보를 보내주기
 })
 
+router.post('/addToFavorite', (req, res) => {
+
+	const favorite = new Favorite(req.body);
+
+	favorite.save((err, doc) => {
+		if (err) return res.status(400).send(err)
+		return res.status(200).json({ success: true, doc })
+	});
+
+})
+
+router.post('/removeFromFavorite', (req, res) => {
+	Favorite.findOneAndDelete({ movieId: req.body.movieId, userFrom: req.body.userFrom })
+		.exec((err, doc) => {
+			if (err) return res.status(400).send(err)
+			res.status(200).json({ success: true, doc })
+		})
+})
+
 module.exports = router;
