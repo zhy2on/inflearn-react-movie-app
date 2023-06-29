@@ -9,10 +9,12 @@ import Favorite from './Sections/Favorite';
 
 function MovieDetail(props) {
 
-	let movieId = props.match.params.movieId
+	const movieId = props.match.params.movieId
 	const [Movie, setMovie] = useState([]);
 	const [Casts, setCasts] = useState([]);
 	const [ActorToggle, setActorToggle] = useState(false);
+	const [LoadingForMovie, setLoadingForMovie] = useState(true);
+	const [LoadingForCast, setLoadingForCast] = useState(true);
 
 	useEffect(() => {
 		const options = {
@@ -37,6 +39,7 @@ function MovieDetail(props) {
 			.then(json => {
 				console.log(json)
 				setMovie(json)
+				setLoadingForMovie(false)
 			})
 			.catch(err => console.error('error:' + err));
 	}
@@ -48,6 +51,7 @@ function MovieDetail(props) {
 			.then(json => {
 				console.log(json.cast)
 				setCasts(json.cast)
+				setLoadingForCast(false)
 			})
 			.catch(err => console.error('error:' + err));
 	}
@@ -61,23 +65,30 @@ function MovieDetail(props) {
 
 			{/*Header*/}
 
-			{Movie.length !== 0 && <MainImage
-				image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
-				title={Movie.original_title}
-				overview={Movie.overview}
-			/>}
+			{!LoadingForMovie ?
+				<MainImage
+					image={`${IMAGE_BASE_URL}w1280${Movie.backdrop_path}`}
+					title={Movie.original_title}
+					overview={Movie.overview}
+				/>
+				:
+				<div>loading..</div>
+			}
 
 			{/*Body*/}
 			<div style={{ width: '85%', margin: '1rem auto' }}>
 
 				<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-					<Favorite movie={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>
+					{!LoadingForMovie && <Favorite movie={Movie} movieId={movieId} userFrom={localStorage.getItem('userId')}/>}
 				</div>
 
 				{/* Movie Info */}
-
-				<MovieInfo movie={Movie} />
-
+				{!LoadingForMovie ?
+					<MovieInfo movie={Movie} />
+					:
+					<div>loading..</div>
+				}
+				
 				<br />
 				{/* Actors Grid */}
 
@@ -85,21 +96,20 @@ function MovieDetail(props) {
 					<Button onClick={toggleActorView}>Toggle Actor View</Button>
 				</div>
 
-				{ActorToggle && <Row gutter={[16, 16]}>
-					{Casts && Casts.map((cast, index) => (
-						<React.Fragment key={index}>
-							<GridCards
-								image={cast.profile_path ?
-									`${IMAGE_BASE_URL}w500${cast.profile_path}` : null}
-								castName={cast.name}
-							/>
-						</React.Fragment>
-					))}
-				</Row>}
-
+				{ActorToggle &&
+					<Row gutter={[16, 16]}>
+						{!LoadingForCast &&
+							Casts.map((cast, index) => (
+								<React.Fragment key={index}>
+									<GridCards
+										image={cast.profile_path ?
+											`${IMAGE_BASE_URL}w500${cast.profile_path}` : null}
+										castName={cast.name}
+									/>
+								</React.Fragment>
+							))}
+					</Row>}
 			</div>
-
-
 		</div>
 	)
 }

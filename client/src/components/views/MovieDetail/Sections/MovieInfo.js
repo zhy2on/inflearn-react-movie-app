@@ -8,7 +8,7 @@ function MovieInfo(props) {
 			<Descriptions.Item label="Title">{movie.original_title}</Descriptions.Item>
 			<Descriptions.Item label="relase_date">{movie.release_date}</Descriptions.Item>
 			<Descriptions.Item label="revenue">{movie.revenue}</Descriptions.Item>
-			<Descriptions.Item label="runtime">{movie.runtime}</Descriptions.Item>
+			<Descriptions.Item label="runtime">{movie.runtime} mins</Descriptions.Item>
 			<Descriptions.Item label="vote_average" span={2}>
 				{movie.vote_average}
 			</Descriptions.Item>
