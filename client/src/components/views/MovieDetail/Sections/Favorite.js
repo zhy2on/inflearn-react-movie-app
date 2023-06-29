@@ -47,7 +47,6 @@ function Favorite(props) {
 			Axios.post('/api/favorite/removeFromFavorite', variables)
 				.then(res => {
 					if (res.data.success) {
-						console.log(res.data)
 						setFavoriteNumber(FavoriteNumber - 1)
 						setFavorited(!Favorited)
 					} else {
@@ -58,7 +57,6 @@ function Favorite(props) {
 			Axios.post('/api/favorite/addToFavorite', variables)
 				.then(res => {
 					if (res.data.success) {
-						console.log(res.data)
 						setFavoriteNumber(FavoriteNumber + 1)
 						setFavorited(!Favorited)
 					} else {
