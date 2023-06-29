@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { Favorite } = require('../models/Favorite');
-const { User } = require('../models/User');
 
 router.post('/favoriteNumber', (req, res) => {
 	// mongoDB에서 favorite 숫자를 가져오기
@@ -27,8 +26,7 @@ router.post('/favorited', (req, res) => {
 })
 
 router.post('/addToFavorite', (req, res) => {
-
-	const favorite = new Favorite(req.body);
+	const favorite = new Favorite(req.body)
 
 	favorite.save((err, doc) => {
 		if (err) return res.status(400).send(err)

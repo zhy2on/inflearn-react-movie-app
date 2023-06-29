@@ -13,13 +13,12 @@ const favoriteSchema = mongoose.Schema({
 		type: String
 	},
 	moviePost: {
-		tpye: String
+		type: String
 	},
 	movieRunTime: {
 		type: String
 	}
 }, { timestamps: true })
-
 
 const Favorite = mongoose.model('Favorite', favoriteSchema);
 
